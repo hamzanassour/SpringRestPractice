@@ -10,6 +10,9 @@ public class Student {
     private BatchInfo batchInfo ;
 
 
+    public Student() {
+    }
+
     public int getId() {
         return id;
     }
@@ -80,9 +83,12 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", cne='" + cne + '\'' +
                 ", level=" + level +
+                ", country='" + country + '\'' +
+                ", batchInfo=" + batchInfo +
                 '}';
     }
 }
