@@ -10,4 +10,7 @@ public interface StudentDao {
     Student getStudentDataById(int id);
     Student getStudentDataByName(String name);
     List<Student> saveStudent(Student student);
+    Student updateStudent(Student student);
+
+    void deleteStudent(int id);
 }

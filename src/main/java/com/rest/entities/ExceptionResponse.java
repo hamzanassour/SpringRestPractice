@@ -2,7 +2,7 @@ package com.rest.entities;
 
 import java.util.Date;
 
-public class GetStudentErrorResponse {
+public class ExceptionResponse {
 
     private Date date ;
     private  String errorClass ;

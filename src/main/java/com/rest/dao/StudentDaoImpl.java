@@ -54,4 +54,19 @@ public class StudentDaoImpl implements StudentDao {
         return students;
     }
 
+    @Override
+    public Student updateStudent(Student s) {
+       Student student= getStudentDataById(s.getId());
+       student.setName(s.getName());
+       student.setCountry(s.getCountry());
+       student.setLevel(s.getLevel());
+       student.setCne(s.getCne());
+       return student;
+    }
+
+    @Override
+    public void deleteStudent(int id ) {
+              students.remove(getStudentDataById(id));
+    }
+
 }
