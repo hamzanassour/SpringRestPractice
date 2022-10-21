@@ -6,10 +6,14 @@ import java.util.List;
 
 public interface StudentDao {
 
-    List<Student>  getAllStudents();
-    Student getStudentDataById(int id);
+    List<Student> getAllStudents();
+
+    Student getStudentById(int id);
+
     Student getStudentDataByName(String name);
-    List<Student> saveStudent(Student student);
+
+    Student saveStudent(Student student);
+
     Student updateStudent(Student student);
 
     void deleteStudent(int id);

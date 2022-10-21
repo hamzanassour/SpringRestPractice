@@ -1,72 +1,68 @@
 package com.rest.dao;
 
 import com.rest.entities.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class StudentDaoImpl implements StudentDao {
 
-    List<Student> students = new ArrayList<>();
+    final JdbcTemplate jdbcTemplate;
 
-    @PostConstruct
-    public void setUpStudents(){
-        System.out.println("we are creating objects");
-        Student student1 = new Student(1, "hamza" , "W439005" , 5 , "Morocco");
-        Student student2 = new Student(2,"ayoub" , "W439005" , 3 , "Morocco");
-        Student student3 = new Student(3,"salma" , "W439005" , 4 , "India");
-        Student student4 = new Student(4,"yasser" , "W439005" , 2 , "USA");
-        Student student5 = new Student(5,"fatima" , "W439005" , 1 , "CANDA");
-        this.students.add(student1);
-        this.students.add(student2);
-        this.students.add(student3);
-        this.students.add(student4);
-        this.students.add(student5);
+    public StudentDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
+
 
     @Override
     public List<Student> getAllStudents() {
-        return  this.students;
-    }
-
-    @Override
-    public Student getStudentDataById(int id) {
-        return students.get(id-1);
-    }
-
-    @Override
-    public Student getStudentDataByName(String name) {
-
-        for (Student s : students){
-            if (s.getName().equals(name)){
-                return s;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Student> saveStudent(Student student) {
-        students.add(student);
+        final String sql = "select * from student ";
+        List<Student> students = jdbcTemplate.query (sql, new StudentMapper ());
         return students;
     }
 
     @Override
-    public Student updateStudent(Student s) {
-       Student student= getStudentDataById(s.getId());
-       student.setName(s.getName());
-       student.setCountry(s.getCountry());
-       student.setLevel(s.getLevel());
-       student.setCne(s.getCne());
-       return student;
+    public Student getStudentById(int id) {
+        final String SQL_STUDENT_SELECT_SINGLE = "select * from student where id = ? ";
+        Student student = jdbcTemplate.queryForObject (SQL_STUDENT_SELECT_SINGLE, new StudentMapper (), id);
+        return student;
     }
 
     @Override
-    public void deleteStudent(int id ) {
-              students.remove(getStudentDataById(id));
+    public Student getStudentDataByName(String name) {
+        final String SQL_STUDENT_SELECT_SINGLE = "select * from student where name = ? ";
+        Student student = jdbcTemplate.queryForObject (SQL_STUDENT_SELECT_SINGLE, new StudentMapper (), name);
+        return student;
+    }
+
+    @Override
+    public Student saveStudent(Student student) {
+        Student res = new Student ();
+        final String sql = "insert into student values ( ? , ? , ? , ? , ?) " ;
+        int update = jdbcTemplate.update (sql, student.getId (), student.getName (), student.getCne (), student.getLevel (), student.getCountry ());
+        if (update == 1 ){
+           res=  getStudentById (student.getId ());
+        }
+        return res;
+    }
+    @Override
+    public Student updateStudent(Student student) {
+        Student res = new Student ();
+        final String sql = "update  student  set name = ? , cne = ? ,level = ? , country = ? where id = ? " ;
+        int update = jdbcTemplate.update (sql,  student.getName (), student.getCne (), student.getLevel (), student.getCountry () , student.getId ());
+        if (update == 1 ){
+            res=  getStudentById (student.getId ());
+        }
+        return res;
+    }
+
+    @Override
+    public void deleteStudent(int id) {
+        final String sql = "delete  from student where id = ?" ;
+        jdbcTemplate.update (sql, id);
     }
 
 }

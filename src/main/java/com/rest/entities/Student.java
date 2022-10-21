@@ -7,7 +7,7 @@ public class Student {
     private String cne;
     private int level ;
     private String country ;
-    private BatchInfo batchInfo ;
+    //private BatchInfo batchInfo ;
 
 
     public Student() {
@@ -25,13 +25,13 @@ public class Student {
         this.country = country;
     }
 
-    public BatchInfo getBatchInfo() {
-        return batchInfo;
-    }
+    //public BatchInfo getBatchInfo() {
+       // return batchInfo;
+    //}
 
-    public void setBatchInfo(BatchInfo batchInfo) {
-        this.batchInfo = batchInfo;
-    }
+   // public void setBatchInfo(BatchInfo batchInfo) {
+       // this.batchInfo = batchInfo;
+    // }
 
     public Student(int id, String name, String cne, int level, String country) {
         this.id = id;
@@ -41,19 +41,12 @@ public class Student {
         this.country = country;
     }
 
-    public Student(String name, String cne, int level, String country, BatchInfo batchInfo) {
-        this.name = name;
-        this.cne = cne;
-        this.level = level;
-        this.country = country;
-        this.batchInfo = batchInfo;
-    }
-
     public Student(String name, String cne, int level, String country) {
         this.name = name;
         this.cne = cne;
         this.level = level;
         this.country = country;
+        //this.batchInfo = batchInfo;
     }
 
     public String getName() {
@@ -88,7 +81,6 @@ public class Student {
                 ", cne='" + cne + '\'' +
                 ", level=" + level +
                 ", country='" + country + '\'' +
-                ", batchInfo=" + batchInfo +
                 '}';
     }
 }
